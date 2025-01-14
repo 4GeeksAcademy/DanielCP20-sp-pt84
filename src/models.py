@@ -10,7 +10,7 @@ class User(db.Model):
     password = db.Column(db.String(80), nullable=False)
     is_active = db.Column(db.Boolean(), nullable=False)
 
-    favorites = db.relationship('FavoriteItem', back_populates='user')
+    favorites = db.relationship('FavoriteItem', back_populates='user', cascade="all, delete-orphan")
 
     def __repr__(self):
         return f'<User %r>' % self.user_name
@@ -33,7 +33,7 @@ class Planet(db.Model):
     url = db.Column(db.String(255))
 
     habitant = db.relationship('People', back_populates='planet')
-    favorite_item = db.relationship('FavoriteItem', back_populates='planet')
+    favorite_item = db.relationship('FavoriteItem', back_populates='planet', cascade="all, delete-orphan")
 
     def __repr__(self):
         return f'<El planeta con ID {self.id} es {self.name}>'
@@ -60,7 +60,7 @@ class People(db.Model):
     url = db.Column(db.String(255))
 
     planet = db.relationship(Planet, back_populates='habitant')
-    favorite_item = db.relationship('FavoriteItem', back_populates='people')
+    favorite_item = db.relationship('FavoriteItem', back_populates='people', cascade="all, delete-orphan")
 
     def __repr__(self):
         return f'<Personaje con ID {self.id} se llama {self.name}>'
